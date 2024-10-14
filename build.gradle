@@ -86,10 +86,13 @@ publishing {
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     projectId = "${project.project_id}"
+    versionName = "Flowstone ${project.mod_version}"
+    changelog = "sh CHANGELOG.sh".execute().text
     gameVersions = ["1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6", "1.21", "1.21.1"]
     uploadFile = remapJar
-    syncBodyFrom = rootProject.file("README.md").text
+    syncBodyFrom = "sh README.sh".execute().text
     dependencies {
         required.project "fabric-api"
     }
+    // debugMode = true
 }
