@@ -37,7 +37,7 @@ Finally, note that only normal ore blocks (like Diamond Ore) can replace Stone, 
 ### Custom Generators
 
 ```json
-"allowWorldlyGenerators": false // disabled by default
+"allowCustomGenerators": false // disabled by default
 ```
 
 With this feature, one can define custom generators through datapacks.
