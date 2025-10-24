@@ -88,6 +88,7 @@ modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     projectId = "${project.project_id}"
     versionName = "Flowstone ${project.mod_version}"
+    changelog = "sh CHANGELOG.sh".execute().text
     versionType = "release"
     gameVersions = Arrays.asList("${project.game_versions}".toString().split(","))
     uploadFile = jar
