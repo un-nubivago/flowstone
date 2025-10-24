@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [6.5] - 2025-10-25
+
+### Added
+
++ Toggle-able End Stone generation feature.
+
 ## [6.4] - 2024-09-7
 
 ### Fixed
@@ -59,9 +65,10 @@
 + Replace configuration file with custom recipes.
 + Drop mod's patch version because unnecessary.
 
-[6.4]: https://github.com/NivOridocs/flowstone/releases/tag/6.4
-[6.3]: https://github.com/NivOridocs/flowstone/releases/tag/6.3
-[6.2]: https://github.com/NivOridocs/flowstone/releases/tag/6.2
-[6.1]: https://github.com/NivOridocs/flowstone/releases/tag/6.1
-[6.0]: https://github.com/NivOridocs/flowstone/releases/tag/6.0
-[5.1]: https://github.com/NivOridocs/flowstone/releases/tag/5.1
+[6.5]: https://github.com/un-nubivago/flowstone/releases/tag/6.5
+[6.4]: https://github.com/un-nubivago/flowstone/releases/tag/6.4
+[6.3]: https://github.com/un-nubivago/flowstone/releases/tag/6.3
+[6.2]: https://github.com/un-nubivago/flowstone/releases/tag/6.2
+[6.1]: https://github.com/un-nubivago/flowstone/releases/tag/6.1
+[6.0]: https://github.com/un-nubivago/flowstone/releases/tag/6.0
+[5.1]: https://github.com/un-nubivago/flowstone/releases/tag/5.1

@@ -36,7 +36,7 @@ public class Flowstone implements ModInitializer {
         ServerWorldEvents.LOAD.register(DeepslateGenerator.getCacheInvalidator());
         ServerWorldEvents.LOAD.register(WorldlyGenerator.getCacheInvalidator());
 
-        Configuration.LOADED.register(() -> LOGGER.info("Load configuration"));
+        Configuration.LOADED.register(() -> LOGGER.info("Configuration loaded"));
         Configuration.LOADED.register(Replacers.getInvalidator());
 
         Configuration.init();
