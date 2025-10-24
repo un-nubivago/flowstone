@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
++ Toggle-able End Stone generation feature.
+
 ## [6.4] - 2024-09-7
 
 ### Fixed

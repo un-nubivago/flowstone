@@ -1,12 +1,12 @@
 {
-	"required": true,
-	"package": "niv.flowstone.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"LavaFluidMixin",
+    "required": true,
+    "package": "niv.flowstone.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "LavaFluidMixin",
         "LiquidBlockMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
 }

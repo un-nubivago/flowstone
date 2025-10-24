@@ -17,6 +17,7 @@ public final class Configuration {
 
     private boolean enableBasaltGeneration = false;
     private boolean enableNetherrackGeneration = true;
+    private boolean enableEndStoneGeneration = true;
 
     private Boolean debugMode = null;
 
@@ -53,6 +54,10 @@ public final class Configuration {
 
     public static final boolean enableNetherrackGeneration() {
         return getInstance().enableNetherrackGeneration;
+    }
+
+    public static final boolean enableEndStoneGeneration() {
+        return getInstance().enableEndStoneGeneration;
     }
 
     public static final boolean debugMode() {

@@ -40,7 +40,7 @@ Finally, note that only normal ore blocks (like Diamond Ore) can replace Stone, 
 "allowCustomGenerators": false // disabled by default
 ```
 
-With this feature, one can define custom generators through datapacks.
+With this feature enabled, one can define custom generators through datapacks.
 
 <details>
 <summary>Example</summary>
@@ -87,7 +87,17 @@ I know, I know, Basalt generation is already a vanilla Minecraft feature but sin
 "enableNetherrackGeneration": true // enabled by default
 ```
 
-With this feature, whenever Lava meets a Blue Ice block in the Nether, and if no Basalt is to be generated, the Lava turns into a Netherrack block.
+With this feature enabled, whenever Lava meets a Blue Ice block in the Nether, and if no Basalt is to be generated, the Lava turns into a Netherrack block.
+
+### End Stone Generation
+
+```json
+"enableEndStoneGeneration": true // enabled by default
+```
+
+With this feature enabled, whenever a Stone or Cobblestone is to be generated while in The End, an End Stone block is generated instead. Note that this feature makes ores' regeneration impossible in The End but makes End Stone (more easily) renewable.
+
+This feature is enabled by default because I like the idea that The End's corrupted and, thus, that (almost) every block generated within gets corrupted as well.
 
 ### Debug Mode
 
