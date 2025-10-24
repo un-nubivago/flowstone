@@ -39,10 +39,18 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property "mod_version", project.mod_version
+    inputs.property "loader_version", project.loader_version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "fabric_version", project.fabric_version
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+         expand([
+            'mod_version': project.mod_version,
+            'loader_version': project.loader_version,
+            'minecraft_version': project.minecraft_version,
+            'fabric_version': project.fabric_version
+        ])
     }
 }
 
@@ -87,8 +95,8 @@ modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     projectId = "${project.project_id}"
     versionName = "Flowstone ${project.mod_version}"
-    changelog = "sh CHANGELOG.sh".execute().text
-    gameVersions = ["1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6", "1.21", "1.21.1"]
+    versionType = "release"
+    gameVersions = Arrays.asList("${project.game_versions}".toString().split(","))
     uploadFile = remapJar
     syncBodyFrom = "sh README.sh".execute().text
     dependencies {

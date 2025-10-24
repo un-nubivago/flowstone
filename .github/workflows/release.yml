@@ -1,0 +1,55 @@
+# Automatically build the project and run any configured tests for every push
+# and submitted pull request. This can help catch issues that only occur on
+# certain platforms or Java versions, and provides a first line of defense
+# against bad commits.
+
+name: Flowstone Release Workflow
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - name: Build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build
+
+      - name: Store Reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            **/build/reports/
+            **/build/test-results/
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          version=`grep minecraft_version gradle.properties | cut -d'=' -f2`
+          gh release create $tag ./build/libs/*.jar \
+              --draft --verify-tag \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "Heater $tag for Minecraft $version" \
+              --notes "$(./CHANGELOG.sh)"
