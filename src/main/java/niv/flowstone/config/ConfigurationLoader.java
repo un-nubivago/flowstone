@@ -9,24 +9,31 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+
 import com.google.common.base.Suppliers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.Strictness;
 
 import net.fabricmc.loader.api.FabricLoader;
 
+@NullMarked
 public final class ConfigurationLoader {
 
     private static final long DELAY = 5000; // ms (5s)
 
+    @SuppressWarnings("null")
     private static final Gson gson = new GsonBuilder()
-            .setLenient()
+            .setStrictness(Strictness.LENIENT)
             .setPrettyPrinting()
             .create();
 
-    private static final Supplier<File> configurationFile = Suppliers
+    @SuppressWarnings("null")
+    private static final Supplier<@NonNull File> configurationFile = Suppliers
             .memoize(() -> FabricLoader.getInstance().getGameDir()
                     .resolve("config")
                     .resolve(MOD_ID + ".json")
@@ -52,6 +59,7 @@ public final class ConfigurationLoader {
         return configuration;
     }
 
+    @SuppressWarnings("null")
     private static final synchronized void synchConfiguration() {
         var now = System.currentTimeMillis();
         if (timestamp + DELAY < now) {
@@ -77,6 +85,7 @@ public final class ConfigurationLoader {
         }
     }
 
+    @SuppressWarnings("null")
     private static final boolean read(File file) {
         var newLastModified = file.lastModified();
         if (newLastModified <= lastModified) {

@@ -2,12 +2,17 @@ package niv.flowstone.config;
 
 import java.util.stream.Stream;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
+@NullMarked
 public final class Configuration {
 
-    public static final Event<Runnable> LOADED = EventFactory
+    public static final Event<@NonNull Runnable> LOADED = EventFactory
             .createArrayBacked(Runnable.class,
                     runnables -> () -> Stream.of(runnables).forEach(Runnable::run));
 
@@ -19,7 +24,7 @@ public final class Configuration {
     private boolean enableNetherrackGeneration = true;
     private boolean enableEndStoneGeneration = true;
 
-    private Boolean debugMode = null;
+    private @Nullable Boolean debugMode = null;
 
     Configuration() {
     }

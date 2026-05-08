@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.Load;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents.Load;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerChunkCache;
@@ -27,9 +31,13 @@ import niv.flowstone.Replacers;
 import niv.flowstone.api.Generator;
 import niv.flowstone.api.Replacer;
 
+@NullMarked
 public class DeepslateGenerator implements Generator {
 
-    private static final Map<ServerLevel, Map<Block, Generator>> cache = new HashMap<>(3);
+    @SuppressWarnings("null")
+    private static final Map<@NonNull ServerLevel, @Nullable Map<@NonNull Block, @NonNull Generator>> cache = HashMap
+            .newHashMap(
+                    3);
 
     private final BlockState state;
 
@@ -43,8 +51,9 @@ public class DeepslateGenerator implements Generator {
         this.minY = minY;
     }
 
+    @SuppressWarnings("null")
     @Override
-    public Optional<BlockState> apply(LevelAccessor level, BlockPos pos) {
+    public Optional<@Nullable BlockState> apply(LevelAccessor level, BlockPos pos) {
         return Optional.of(this.state).filter(value -> test(level.getRandom(), pos.getY()));
     }
 
@@ -52,6 +61,7 @@ public class DeepslateGenerator implements Generator {
         return y <= minY || y < maxY && random.nextDouble() < Mth.map(y, minY, maxY, 1d, 0d);
     }
 
+    @SuppressWarnings({ "null", "java:S2637" })
     private static final BlockState applyAny(LevelAccessor level, BlockPos pos, BlockState state) {
         var result = cache.get(level);
         if (result == null) {
@@ -66,7 +76,8 @@ public class DeepslateGenerator implements Generator {
                 .orElse(state);
     }
 
-    private static Map<Block, Generator> loadGenerators(ServerLevel level) {
+    @SuppressWarnings("null")
+    private static Map<@NonNull Block, @NonNull Generator> loadGenerators(ServerLevel level) {
         var gradient = Optional.of(level)
                 .map(ServerLevel::getChunkSource)
                 .map(ServerChunkCache::getGenerator)
@@ -85,7 +96,7 @@ public class DeepslateGenerator implements Generator {
                 .map(TestRuleSource::ifTrue)
                 .filter(VerticalGradientConditionSource.class::isInstance)
                 .map(VerticalGradientConditionSource.class::cast);
-        var result = new HashMap<Block, Generator>(2);
+        var result = HashMap.<@NonNull Block, @NonNull Generator>newHashMap(2);
         if (gradient.isPresent()) {
             var context = new WorldGenerationContext(level.getChunkSource().getGenerator(), level);
             var maxY = gradient.get().falseAtAndAbove().resolveY(context);

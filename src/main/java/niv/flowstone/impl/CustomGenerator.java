@@ -2,11 +2,16 @@ package niv.flowstone.impl;
 
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toSet;
+import static net.minecraft.resources.Identifier.fromNamespaceAndPath;
 import static niv.flowstone.config.Configuration.debugMode;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import com.google.common.base.MoreObjects;
 import com.mojang.serialization.Codec;
@@ -14,9 +19,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -25,16 +30,18 @@ import niv.flowstone.Flowstone;
 import niv.flowstone.api.Generator;
 import niv.flowstone.api.Replacer;
 
-public class CustomGenerator implements Predicate<BlockState>, Generator {
+@NullMarked
+public class CustomGenerator implements Predicate<@NonNull BlockState>, Generator {
 
-    public static final Codec<CustomGenerator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    @SuppressWarnings("null")
+    public static final Codec<@Nullable CustomGenerator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("replace").forGetter(r -> r.replace),
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("with").forGetter(r -> r.with),
             Codec.doubleRange(0d, 1d).fieldOf("chance").forGetter(r -> r.chance))
             .apply(instance, CustomGenerator::new));
 
     public static final ResourceKey<Registry<CustomGenerator>> REGISTRY = ResourceKey
-            .createRegistryKey(ResourceLocation.tryBuild(Flowstone.MOD_ID, "generators"));
+            .createRegistryKey(fromNamespaceAndPath(Flowstone.MOD_ID, "generators"));
 
     private final Block replace;
 
@@ -53,21 +60,25 @@ public class CustomGenerator implements Predicate<BlockState>, Generator {
         return state.is(replace);
     }
 
+    @SuppressWarnings("null")
     @Override
-    public Optional<BlockState> apply(LevelAccessor level, BlockPos pos) {
+    public Optional<@Nullable BlockState> apply(LevelAccessor level, BlockPos pos) {
         return Optional.of(this.with.defaultBlockState()).filter(value -> test(level.getRandom()));
     }
 
     private boolean test(RandomSource random) {
-        return debugMode() ||  random.nextDouble() <= this.chance;
+        return debugMode() || random.nextDouble() <= this.chance;
     }
 
+    @SuppressWarnings("null")
     private static final BlockState applyAll(LevelAccessor level, BlockPos pos, BlockState state) {
         return Generator.applyAll(getGenerators(level, state), level, pos).orElse(state);
     }
 
-    private static final Set<Generator> getGenerators(LevelAccessor level, BlockState state) {
-        return level.registryAccess().registry(REGISTRY).stream()
+    @SuppressWarnings("null")
+    private static final Set<@NonNull Generator> getGenerators(LevelAccessor level, BlockState state) {
+        return level.registryAccess().get(REGISTRY).stream()
+                .map(Reference::value)
                 .flatMap(Registry::stream)
                 .filter(generator -> generator.test(state))
                 .collect(toSet());
