@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [6.6] - 2025-10-25
+
 ### Changed
 
 + Change base Minecraft version to 26.1.
@@ -73,6 +75,7 @@
 + Replace configuration file with custom recipes.
 + Drop mod's patch version because unnecessary.
 
+[6.6]: https://github.com/un-nubivago/flowstone/releases/tag/6.6
 [6.5]: https://github.com/un-nubivago/flowstone/releases/tag/6.5
 [6.4]: https://github.com/un-nubivago/flowstone/releases/tag/6.4
 [6.3]: https://github.com/un-nubivago/flowstone/releases/tag/6.3
