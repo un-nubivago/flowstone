@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.core.BlockPos;
@@ -19,18 +23,19 @@ import niv.flowstone.impl.DeepslateGenerator;
 import niv.flowstone.impl.EndReplacer;
 import niv.flowstone.impl.WorldlyGenerator;
 
+@NullMarked
 public class Replacers {
 
     private static final Replacer NO_OP = (level, pos, state) -> state;
 
-    private static final AtomicReference<Replacer> CONFIGURED_REPLACER = new AtomicReference<>();
+    private static final AtomicReference<@Nullable Replacer> CONFIGURED_REPLACER = new AtomicReference<>();
 
     private Replacers() {
     }
 
     private static record AllowedBlocksNullableReplacer(ImmutableList<Block> allowed) implements Replacer {
         @Override
-        public BlockState apply(LevelAccessor level, BlockPos pos, BlockState state) {
+        public @Nullable BlockState apply(LevelAccessor level, BlockPos pos, BlockState state) {
             return allowed().stream().anyMatch(state::is) ? state : null;
         }
     }
@@ -44,8 +49,9 @@ public class Replacers {
     }
 
     private static record DefaultedMultiReplacer(ImmutableList<Replacer> replacers) implements Replacer {
+        @SuppressWarnings("null")
         @Override
-        public BlockState apply(LevelAccessor level, BlockPos pos, BlockState state) {
+        public @Nullable BlockState apply(LevelAccessor level, BlockPos pos, BlockState state) {
             var result = Optional.of(state);
             for (var replacer : replacers) {
                 result = result.map(value -> replacer.apply(level, pos, value));
@@ -66,13 +72,15 @@ public class Replacers {
         return () -> CONFIGURED_REPLACER.lazySet(null);
     }
 
+    @SuppressWarnings({"null", "java:S2637"})
     public static final Replacer configuredReplacer() {
         return CONFIGURED_REPLACER.updateAndGet(Replacers::update);
     }
 
-    private static final Replacer update(Replacer value) {
+    @SuppressWarnings("null")
+    private static final Replacer update(@Nullable Replacer value) {
         if (value == null) {
-            var replacers = new ArrayList<Replacer>(3);
+            var replacers = new ArrayList<@NonNull Replacer>(3);
 
             if (Configuration.allowDeepslateGenerators())
                 replacers.add(DeepslateGenerator.getReplacer());

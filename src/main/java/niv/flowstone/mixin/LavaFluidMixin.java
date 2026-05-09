@@ -1,5 +1,6 @@
 package niv.flowstone.mixin;
 
+import org.jspecify.annotations.NullMarked;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -11,6 +12,7 @@ import net.minecraft.world.level.material.LavaFluid;
 import niv.flowstone.Flowstone;
 
 @Mixin(LavaFluid.class)
+@NullMarked
 public class LavaFluidMixin {
 
     private static final String LEVEL_ACCESSOR = "Lnet/minecraft/world/level/LevelAccessor;";

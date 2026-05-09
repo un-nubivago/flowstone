@@ -7,13 +7,17 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 import it.unimi.dsi.fastutil.ints.Int2DoubleFunction;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.Load;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents.Load;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -38,6 +42,7 @@ import niv.flowstone.api.Replacer;
 
 import static niv.flowstone.config.Configuration.debugMode;
 
+@NullMarked
 public class WorldlyGenerator implements Generator {
 
     private static final Table<Block, Biome, Set<Generator>> biomeCache = HashBasedTable.create();
@@ -63,8 +68,9 @@ public class WorldlyGenerator implements Generator {
         this.function = function;
     }
 
+    @SuppressWarnings("null")
     @Override
-    public Optional<BlockState> apply(LevelAccessor level, BlockPos pos) {
+    public Optional<@Nullable BlockState> apply(LevelAccessor level, BlockPos pos) {
         return Optional.of(this.state).filter(x -> test(level.getRandom(), pos.getY()));
     }
 
@@ -82,6 +88,7 @@ public class WorldlyGenerator implements Generator {
                 .toString();
     }
 
+    @SuppressWarnings("null")
     private static final BlockState applyAll(LevelAccessor accessor, BlockPos pos, BlockState state) {
         var biome = accessor.getBiome(pos).value();
         var result = biomeCache.get(state.getBlock(), biome);
@@ -107,13 +114,15 @@ public class WorldlyGenerator implements Generator {
         return Generator.applyAll(result, accessor, pos).orElse(state);
     }
 
-    private static final Set<Generator> loadGenerators(ServerLevel level, PlacedFeature feature, BlockState state) {
+    @SuppressWarnings("null")
+    private static final Set<@NonNull Generator> loadGenerators(ServerLevel level, PlacedFeature feature, BlockState state) {
         var base = baseGeneratorCache.computeIfAbsent(feature, key -> loadBaseGenerator(level, feature));
         if (base.isEmpty()) {
             return Set.of();
         }
 
         var config = feature.getFeatures()
+                .map(Holder::value)
                 .map(ConfiguredFeature::config)
                 .filter(OreConfiguration.class::isInstance)
                 .findFirst()
@@ -135,9 +144,9 @@ public class WorldlyGenerator implements Generator {
     }
 
     private static final class BaseGeneratorBuilder {
-        private Integer blockCount = 1;
-        private Integer maxBlockCount = null;
-        private Int2DoubleFunction function = null;
+        private @Nullable Integer blockCount = 1;
+        private @Nullable Integer maxBlockCount = null;
+        private @Nullable Int2DoubleFunction function = null;
 
         public BaseGeneratorBuilder blockCountMultiply(int value) {
             if (this.blockCount == null) {
@@ -158,7 +167,8 @@ public class WorldlyGenerator implements Generator {
             return this;
         }
 
-        public Optional<BaseGenerator> tryBuild() {
+        @SuppressWarnings("null")
+        public Optional<@Nullable BaseGenerator> tryBuild() {
             if (blockCount == null || maxBlockCount == null || function == null) {
                 return Optional.empty();
             } else {
@@ -182,7 +192,7 @@ public class WorldlyGenerator implements Generator {
 
     private static final void processCount(
             BaseGeneratorBuilder builder, CountPlacement modifier) {
-        builder.blockCountMultiply(modifier.count.getMaxValue());
+        builder.blockCountMultiply(modifier.count.maxInclusive());
     }
 
     private static record UniformFunction(int minY, int maxY)
