@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Changed
+
++ Change base Minecraft version to 26.1.
+
+### Fixed
+
++ Fix configuration file being reloaded even when not necessary.
+
 ## [6.5] - 2025-10-25
 
 ### Added
