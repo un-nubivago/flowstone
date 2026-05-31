@@ -2,10 +2,10 @@ package niv.flowstone.config;
 
 import static niv.flowstone.Flowstone.LOGGER;
 import static niv.flowstone.Flowstone.MOD_ID;
+import static niv.flowstone.Flowstone.MOD_NAME;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +17,7 @@ import org.jspecify.annotations.NullMarked;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.Strictness;
 
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -39,6 +40,7 @@ public final class Loader<C> {
     Loader(Class<C> configurationClass, Runnable invoker, Supplier<@NonNull C> constructor) {
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
+                .setStrictness(Strictness.LENIENT)
                 .create();
         this.file = FabricLoader.getInstance().getGameDir()
                 .resolve("config")
@@ -73,8 +75,8 @@ public final class Loader<C> {
             var buffer = StandardCharsets.UTF_8.encode(json);
             channel.write(buffer);
             return true;
-        } catch (IOException ex) {
-            LOGGER.warn("Failed to write configuration file", ex);
+        } catch (Exception ex) {
+            LOGGER.warn("({}) Failed to write configuration file", MOD_NAME, ex);
             return false;
         }
     }
@@ -95,8 +97,8 @@ public final class Loader<C> {
                 this.configuration = newConfiguration;
                 return true;
             }
-        } catch (IOException ex) {
-            LOGGER.warn("Failed to read configuration file", ex);
+        } catch (Exception ex) {
+            LOGGER.warn("({}) Failed to read configuration file", MOD_NAME, ex);
             return false;
         }
     }

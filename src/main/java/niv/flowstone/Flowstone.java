@@ -19,30 +19,27 @@ import niv.flowstone.impl.WorldlyGenerator;
 
 @NullMarked
 public class Flowstone implements ModInitializer {
-    // This logger is used to write text to the console and the log file.
-    // It is considered best practice to use your mod id as the logger's name.
-    // That way, it's clear which mod wrote info, warnings, and errors.
-    @SuppressWarnings("null")
-    public static final Logger LOGGER = LoggerFactory.getLogger("Flowstone");
 
     public static final String MOD_ID = "flowstone";
 
+    public static final String MOD_NAME = "Flowstone";
+
+    @SuppressWarnings("null")
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
+
     @Override
     public void onInitialize() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution.
-        LOGGER.info("Initialize");
-
         DynamicRegistries.register(CustomGenerator.REGISTRY, CustomGenerator.CODEC);
 
         ServerLevelEvents.LOAD.register(DeepslateGenerator.getCacheInvalidator());
         ServerLevelEvents.LOAD.register(WorldlyGenerator.getCacheInvalidator());
 
-        Configuration.LOADED.register(() -> LOGGER.info("Configuration loaded"));
+        Configuration.LOADED.register(() -> LOGGER.info("({}) Configuration loaded", MOD_NAME));
         Configuration.LOADED.register(Replacers.getInvalidator());
 
         Configuration.init();
+
+        LOGGER.info("({}) Initialized", MOD_NAME);
     }
 
     @SuppressWarnings("null")
