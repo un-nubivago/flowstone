@@ -46,9 +46,9 @@ With this feature enabled, one can define custom generators through datapacks.
 <summary>Example</summary>
 
 ```tree
-.
+<datapack_name>.zip
 ├── data
-│   └── additional_generators
+│   └── <datapack_name>
 │       └── flowstone
 │           └── generators
 │               ├── andesite.json

@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [6.7] - 2026-05-31
+
+### Changed
+
++ Updated `pack.mcmeta` file in the `additional_generators` example data pack to post Minecraft 1.29.1 format.
+
+### Fixed
+
++ Fixed configuration parsing to not crash the game on wrong JSON format.
++ Fixed custom generators not loading the correct registry.
+
 ## [6.6] - 2025-10-25
 
 ### Changed
@@ -75,6 +86,7 @@
 + Replace configuration file with custom recipes.
 + Drop mod's patch version because unnecessary.
 
+[6.7]: https://github.com/un-nubivago/flowstone/releases/tag/6.7
 [6.6]: https://github.com/un-nubivago/flowstone/releases/tag/6.6
 [6.5]: https://github.com/un-nubivago/flowstone/releases/tag/6.5
 [6.4]: https://github.com/un-nubivago/flowstone/releases/tag/6.4
