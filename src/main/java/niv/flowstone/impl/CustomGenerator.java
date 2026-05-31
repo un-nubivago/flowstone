@@ -3,6 +3,7 @@ package niv.flowstone.impl;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toSet;
 import static net.minecraft.resources.Identifier.fromNamespaceAndPath;
+import static niv.flowstone.Flowstone.MOD_ID;
 import static niv.flowstone.config.Configuration.debugMode;
 
 import java.util.Optional;
@@ -19,14 +20,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import niv.flowstone.Flowstone;
 import niv.flowstone.api.Generator;
 import niv.flowstone.api.Replacer;
 
@@ -41,7 +40,7 @@ public class CustomGenerator implements Predicate<@NonNull BlockState>, Generato
             .apply(instance, CustomGenerator::new));
 
     public static final ResourceKey<Registry<CustomGenerator>> REGISTRY = ResourceKey
-            .createRegistryKey(fromNamespaceAndPath(Flowstone.MOD_ID, "generators"));
+            .createRegistryKey(fromNamespaceAndPath(MOD_ID, "generators"));
 
     private final Block replace;
 
@@ -77,9 +76,7 @@ public class CustomGenerator implements Predicate<@NonNull BlockState>, Generato
 
     @SuppressWarnings("null")
     private static final Set<@NonNull Generator> getGenerators(LevelAccessor level, BlockState state) {
-        return level.registryAccess().get(REGISTRY).stream()
-                .map(Reference::value)
-                .flatMap(Registry::stream)
+        return level.registryAccess().lookupOrThrow(REGISTRY).stream()
                 .filter(generator -> generator.test(state))
                 .collect(toSet());
     }

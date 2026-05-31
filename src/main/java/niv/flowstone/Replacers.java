@@ -72,7 +72,7 @@ public class Replacers {
         return () -> CONFIGURED_REPLACER.lazySet(null);
     }
 
-    @SuppressWarnings({"null", "java:S2637"})
+    @SuppressWarnings({ "null", "java:S2637" })
     public static final Replacer configuredReplacer() {
         return CONFIGURED_REPLACER.updateAndGet(Replacers::update);
     }
@@ -80,7 +80,7 @@ public class Replacers {
     @SuppressWarnings("null")
     private static final Replacer update(@Nullable Replacer value) {
         if (value == null) {
-            var replacers = new ArrayList<@NonNull Replacer>(3);
+            var replacers = new ArrayList<@NonNull Replacer>(4);
 
             if (Configuration.allowDeepslateGenerators())
                 replacers.add(DeepslateGenerator.getReplacer());
@@ -91,9 +91,8 @@ public class Replacers {
             if (Configuration.allowCustomGenerators())
                 replacers.add(CustomGenerator.getReplacer());
 
-            if (Configuration.enableEndStoneGeneration()) {
+            if (Configuration.enableEndStoneGeneration())
                 replacers.add(EndReplacer.getReplacer());
-            }
 
             if (replacers.isEmpty()) {
                 return NO_OP;
