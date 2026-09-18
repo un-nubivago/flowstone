@@ -8,7 +8,7 @@ _(In the GIF, I configured **Flowstone** to always generate some ore instead of 
 
 ## Features
 
-Since version 6.3, **Flowstone** offers various features that can be separately activated and deactivated through the configuration file.
+Since version 6.3, **Flowstone** offers several features you can enable or disable separately in the configuration file.
 
 You can usually find **Flowstone**'s configuration file at `<your-minecraft-instance>/config/flowstone.json`.
 
@@ -22,7 +22,7 @@ With this feature enabled, trying to generate **Stone** or **Cobblestone** when 
 
 > [!NOTE]
 >
-> This feature depends on the world generation options. Thus, if, for some reason, your world doesn't generate **Deepslate** or it does so at a different y-level, then this feature will mirror such configurations.
+> This feature depends on the world generation options. So, if your world doesn't generate **Deepslate** (or generates it at a different y-level), this feature will mirror that configuration.
 
 ### Worldly Generators
 
@@ -30,7 +30,7 @@ With this feature enabled, trying to generate **Stone** or **Cobblestone** when 
 "allowWorldlyGenerators": true // enabled by default
 ```
 
-With this feature enabled, whenever **Stone**, **Deepslate** (with the previous feature), or **Netherrack** (with one of the following features) is about to be generated, an appropriate ore block might be generated instead.
+With this feature enabled, whenever **Stone**, **Deepslate** (with the previous feature), or **Netherrack** (with one of the following features) is about to be generated, it might generate an appropriate ore block instead.
 
 For each ore block (that is, each block under the `c:ores` tag), the probability of it being generated depends on the world generation configuration, so on a vanilla world it follows the same distribution [documented on the wiki](https://minecraft.wiki/w/Ore).
 
@@ -99,7 +99,7 @@ With this feature enabled, whenever **Lava** meets a block of **Blue Ice** in th
 "enableEndStoneGeneration": true // enabled by default
 ```
 
-With this feature enabled, whenever **Stone** or **Cobblestone** is about to be generated in **The End**, a block of **End Stone** gets generated instead.
+With this feature enabled, whenever **Stone** or **Cobblestone** is about to generate in **The End**, a block of **End Stone** generates instead.
 
 Alas, this feature makes ores' regeneration impossible in **The End**. Nonetheless, I set it as enabled by default because I like the idea that **The End** is _corrupted_ and, thus, that (almost) every block generated within it gets corrupted as well.
 
