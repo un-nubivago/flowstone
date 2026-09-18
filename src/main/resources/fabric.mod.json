@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "flowstone",
-    "version": "${mod_version}",
+    "version": "${version}",
     "name": "Flowstone",
     "description": "A configurable mod that changes what happens when lava meets water or ice, allowing for the (re)generation of ores and other resources.",
     "authors": [
@@ -25,7 +25,7 @@
     ],
     "depends": {
         "fabricloader": ">=${loader_version}",
-        "minecraft": "~${minecraft_version}",
+        "minecraft": ">=${minecraft_version}",
         "java": ">=25",
         "fabric-api": "*"
     }

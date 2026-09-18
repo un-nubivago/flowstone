@@ -39,7 +39,7 @@ public class CustomGenerator implements Predicate<@NonNull BlockState>, Generato
             Codec.doubleRange(0d, 1d).fieldOf("chance").forGetter(r -> r.chance))
             .apply(instance, CustomGenerator::new));
 
-    public static final ResourceKey<Registry<CustomGenerator>> REGISTRY = ResourceKey
+    public static final ResourceKey<Registry<@Nullable CustomGenerator>> REGISTRY = ResourceKey
             .createRegistryKey(fromNamespaceAndPath(MOD_ID, "generators"));
 
     private final Block replace;

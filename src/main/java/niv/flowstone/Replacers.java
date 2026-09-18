@@ -21,7 +21,7 @@ import niv.flowstone.config.Configuration;
 import niv.flowstone.impl.CustomGenerator;
 import niv.flowstone.impl.DeepslateGenerator;
 import niv.flowstone.impl.EndReplacer;
-import niv.flowstone.impl.WorldlyGenerator;
+import niv.flowstone.impl.OreReplacer;
 
 @NullMarked
 public class Replacers {
@@ -86,7 +86,7 @@ public class Replacers {
                 replacers.add(DeepslateGenerator.getReplacer());
 
             if (Configuration.allowWorldlyGenerators())
-                replacers.add(WorldlyGenerator.getReplacer());
+                replacers.add(OreReplacer.getReplacer());
 
             if (Configuration.allowCustomGenerators())
                 replacers.add(CustomGenerator.getReplacer());

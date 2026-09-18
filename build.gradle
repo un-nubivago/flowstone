@@ -4,13 +4,6 @@ plugins {
     id "com.modrinth.minotaur" version "2.+"
 }
 
-version = project.mod_version
-group = project.maven_group
-
-base {
-    archivesName = project.archives_base_name
-}
-
 repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
@@ -26,7 +19,6 @@ loom {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
@@ -34,15 +26,18 @@ dependencies {
 }
 
 processResources {
-    inputs.property "mod_version", project.mod_version
-    inputs.property "loader_version", project.loader_version
-    inputs.property "minecraft_version", project.minecraft_version
+    def version = project.version
+    def loader_version = project.loader_version
+    def minecraft_version = project.minecraft_version
+    inputs.property "version", version
+    inputs.property "loader_version", loader_version
+    inputs.property "minecraft_version", minecraft_version
 
     filesMatching("fabric.mod.json") {
          expand([
-            'mod_version': project.mod_version,
-            'loader_version': project.loader_version,
-            'minecraft_version': project.minecraft_version,
+            'version': version,
+            'loader_version': loader_version,
+            'minecraft_version': minecraft_version,
         ])
     }
 }
@@ -62,15 +57,18 @@ java {
 }
 
 jar {
+    def projectName = project.name
+    inputs.property "projectName", projectName
+
     from("LICENSE") {
-        rename { "${it}_${project.base.archivesName.get()}"}
+        rename { "${it}_$projectName"}
     }
 }
 
 // configure the maven publication
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        create("mavenJava", MavenPublication) {
             from components.java
         }
     }
@@ -87,7 +85,7 @@ publishing {
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     projectId = "${project.project_id}"
-    versionName = "Flowstone ${project.mod_version}"
+    versionName = "Flowstone ${project.version}"
     changelog = "sh CHANGELOG.sh".execute().text
     versionType = "release"
     gameVersions = Arrays.asList("${project.game_versions}".toString().split(","))
@@ -96,5 +94,4 @@ modrinth {
     dependencies {
         required.project "fabric-api"
     }
-    debugMode = true
 }

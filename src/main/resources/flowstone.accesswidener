@@ -10,9 +10,3 @@ accessible   field   net/minecraft/world/level/levelgen/heightproviders/UniformH
 accessible   field   net/minecraft/world/level/levelgen/heightproviders/TrapezoidHeight   minInclusive   Lnet/minecraft/world/level/levelgen/VerticalAnchor;
 accessible   field   net/minecraft/world/level/levelgen/heightproviders/TrapezoidHeight   maxInclusive   Lnet/minecraft/world/level/levelgen/VerticalAnchor;
 accessible   field   net/minecraft/world/level/levelgen/heightproviders/TrapezoidHeight   plateau   I
-
-accessible   class   net/minecraft/world/level/levelgen/SurfaceRules$BlockRuleSource
-accessible   class   net/minecraft/world/level/levelgen/SurfaceRules$SequenceRuleSource
-accessible   class   net/minecraft/world/level/levelgen/SurfaceRules$TestRuleSource
-
-accessible   class   net/minecraft/world/level/levelgen/SurfaceRules$VerticalGradientConditionSource

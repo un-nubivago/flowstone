@@ -1,14 +1,16 @@
 # Flowstone
 
-Flowstone makes ores renewable resources by modifying what blocks Lava turns into whenever it meets Water (or, in some cases, a Blue Ice block).
+**Flowstone** makes ores renewable resources by modifying what blocks **Lava** turns into whenever it meets **Water** (or, in some cases, a block of **Blue Ice**).
 
 ![Flowstone Showcase](img/Flowstone_Showcase_1.gif)
 
-(In the GIF, I configured Flowstone to always generate some ore instead of Stone, for example purposes)
+_(In the GIF, I configured **Flowstone** to always generate some ore instead of **Stone**, for example purposes. See [below](#debug-mode) for details.)_
 
 ## Features
 
-Since version 6.3, Flowstone offers various features that can be separately activated and deactivated through the configuration file.
+Since version 6.3, **Flowstone** offers various features that can be separately activated and deactivated through the configuration file.
+
+You can usually find **Flowstone**'s configuration file at `<your-minecraft-instance>/config/flowstone.json`.
 
 ### Deepslate Generators
 
@@ -16,9 +18,11 @@ Since version 6.3, Flowstone offers various features that can be separately acti
 "allowDeepslateGenerators": true // enabled by default
 ```
 
-With this feature enabled, trying to generate Stone or Cobblestone when deep enough underground (in most worlds, below y=8) will generate Deepslate and Cobbled Deepslate instead.
+With this feature enabled, trying to generate **Stone** or **Cobblestone** when deep enough underground (in most worlds, below $y=8$) will generate Deepslate and Cobbled Deepslate instead.
 
-Note that this feature depends on the world generation options. Thus, if, for some reason, your world doesn't replace Stone and Cobblestone with Deepslate and Cobble Deepslate or does so at a different y-level, this feature will mirror such configurations.
+> [!NOTE]
+>
+> This feature depends on the world generation options. Thus, if, for some reason, your world doesn't generate **Deepslate** or it does so at a different y-level, then this feature will mirror such configurations.
 
 ### Worldly Generators
 
@@ -26,13 +30,13 @@ Note that this feature depends on the world generation options. Thus, if, for so
 "allowWorldlyGenerators": true // enabled by default
 ```
 
-With this feature enabled, whenever Stone, Deepslate (with the previous feature), or Netherrack (with one of the following features) is to be generated, an ore block might be generated instead.
+With this feature enabled, whenever **Stone**, **Deepslate** (with the previous feature), or **Netherrack** (with one of the following features) is about to be generated, an appropriate ore block might be generated instead.
 
-For each ore block (that is, for each block under the `c:ores` tag), the probability of it being generated depends on the world generation configuration, so on a vanilla world with the same distribution [documented on the wiki](https://minecraft.wiki/w/Ore).
+For each ore block (that is, each block under the `c:ores` tag), the probability of it being generated depends on the world generation configuration, so on a vanilla world it follows the same distribution [documented on the wiki](https://minecraft.wiki/w/Ore).
 
 This feature should automatically be compatible with every mod that adds new ores under the `c:ores` tag.
 
-Finally, note that only normal ore blocks (like Diamond Ore) can replace Stone, only deepslate ore blocks (like Deepslate Diamond Ore) can replace Deepslate, and only netherrack ore blocks (like Quartz Ore or Ancient Debris) can replace Netherrack.
+Finally, note that only normal ore blocks (like **Diamond Ore**) can replace **Stone**, only deepslate ore blocks (like **Deepslate Diamond Ore**) can replace **Deepslate**, and only netherrack ore blocks (like **Quartz Ore** or **Ancient Debris**) can replace **Netherrack**.
 
 ### Custom Generators
 
@@ -71,7 +75,7 @@ With this feature enabled, one can define custom generators through datapacks.
 
 </details>
 
-The rest of this example is on the project source page on GitHub, under the examples folder.
+The rest of this example is on the project source page on GitHub, under the [examples folder](./examples/).
 
 ### Basalt Generation
 
@@ -79,7 +83,7 @@ The rest of this example is on the project source page on GitHub, under the exam
 "enableBasaltGeneration": false // disabled by default
 ```
 
-I know, I know, Basalt generation is already a vanilla Minecraft feature but since I freaking hate Basalt for its uselessness, I added this feature to disable its generation. Simple as that.
+I know, I know, **Basalt** generation is already a vanilla **Minecraft** feature, but since I freaking hate **Basalt** for its uselessness, I added this feature to disable its generation. Simple as that.
 
 ### Netherrack Generation
 
@@ -87,7 +91,7 @@ I know, I know, Basalt generation is already a vanilla Minecraft feature but sin
 "enableNetherrackGeneration": true // enabled by default
 ```
 
-With this feature enabled, whenever Lava meets a Blue Ice block in the Nether, and if no Basalt is to be generated, the Lava turns into a Netherrack block.
+With this feature enabled, whenever **Lava** meets a block of **Blue Ice** in the **Nether**, and no **Basalt** would be generated, the **Lava** turns into a block of **Netherrack**.
 
 ### End Stone Generation
 
@@ -95,9 +99,9 @@ With this feature enabled, whenever Lava meets a Blue Ice block in the Nether, a
 "enableEndStoneGeneration": true // enabled by default
 ```
 
-With this feature enabled, whenever a Stone or Cobblestone is to be generated while in The End, an End Stone block is generated instead. Note that this feature makes ores' regeneration impossible in The End but makes End Stone (more easily) renewable.
+With this feature enabled, whenever **Stone** or **Cobblestone** is about to be generated in **The End**, a block of **End Stone** gets generated instead.
 
-This feature is enabled by default because I like the idea that The End's corrupted and, thus, that (almost) every block generated within gets corrupted as well.
+Alas, this feature makes ores' regeneration impossible in **The End**. Nonetheless, I set it as enabled by default because I like the idea that **The End** is _corrupted_ and, thus, that (almost) every block generated within it gets corrupted as well.
 
 ### Debug Mode
 
@@ -105,6 +109,6 @@ This feature is enabled by default because I like the idea that The End's corrup
 "debugMode": null // hidden and disabled by default
 ```
 
-When enabled, this feature forces Flowstone to generate the alternative blocks instead of the default ones, as if setting the chances for those blocks to be generated to 100% (the feature GIF had been generated with this feature enabled, for instance).
+When enabled, this feature forces **Flowstone** to generate the alternative blocks instead of the default ones, as if setting the chances for those blocks to be generated to 100% (for instance, the GIF at the head of this page was generated with this feature enabled).
 
-One should use this feature only when and if they are testing which blocks Worldly or Custom generators (for it works only for those two features) can generate since using it through a normal playthrough is practically cheating.
+Use this feature only when you're testing which blocks _Worldly_ or _Custom_ generators can generate (it works only for those two features), since using it in a normal playthrough is practically cheating.

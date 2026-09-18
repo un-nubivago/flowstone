@@ -24,8 +24,8 @@ public class LavaFluidMixin {
     @Redirect( //
             method = "spreadTo(" + LEVEL_ACCESSOR + BLOCK_POS + BLOCK_STATE + DIRECTION + FLUID_STATE + ")V", //
             at = @At(value = "INVOKE", //
-                    target = LEVEL_ACCESSOR + "setBlock(" + BLOCK_POS + BLOCK_STATE + "I" + ")Z"))
-    public boolean setBlockStateProxy(LevelAccessor level, BlockPos pos, BlockState state, int flags) {
-        return level.setBlock(pos, Flowstone.replace(level, pos, state), flags);
+                    target = LEVEL_ACCESSOR + "setBlockAndUpdate(" + BLOCK_POS + BLOCK_STATE + ")Z"))
+    public boolean setBlockStateProxy(LevelAccessor level, BlockPos pos, BlockState state) {
+        return level.setBlockAndUpdate(pos, Flowstone.replace(level, pos, state));
     }
 }
